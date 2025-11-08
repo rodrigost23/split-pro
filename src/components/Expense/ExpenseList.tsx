@@ -64,22 +64,19 @@ export const ExpenseList: React.FC<{
         return (
           <React.Fragment key={e.id}>
             {isFirstOfMonth && (
-              <>
-                {!isFirst && <Separator className="mt-4" />}
-                <div className="text-xs font-medium text-gray-500 uppercase">
+              <div className="mt-8 mb-2 flex flex-row items-center justify-start gap-3">
+                <div className="text-xs font-medium text-gray-700 uppercase">
                   {new Intl.DateTimeFormat(i18n.language, {
                     month: 'long',
                     year: 'numeric',
                   }).format(currentDate)}
                 </div>
-              </>
+                <Separator className="flex-1 bg-gray-800" />
+              </div>
             )}
             <Link
               href={`/${isGroup ? 'groups' : 'balances'}/${contactId}/expenses/${e.id}`}
-              className={clsx(
-                'flex items-center justify-between',
-                isFirstOfMonth ? 'pt-0 pb-2' : 'py-2',
-              )}
+              className="flex items-center justify-between py-2"
             >
               {isSettlement && <Settlement e={e} userId={userId} />}
               {isCurrencyConversion && <CurrencyConversion e={e} userId={userId} />}
