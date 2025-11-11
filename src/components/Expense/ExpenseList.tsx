@@ -14,6 +14,7 @@ import { api } from '~/utils/api';
 import { useRouter } from 'next/router';
 import { Separator } from '../ui/separator';
 import clsx from 'clsx';
+import { cn } from '~/lib/utils';
 
 type ExpensesOutput =
   | inferRouterOutputs<ExpenseRouter>['getGroupExpenses']
@@ -45,7 +46,6 @@ export const ExpenseList: React.FC<{
     <>
       {expenses.map((e) => {
         const currentDate = e.expenseDate;
-        const isFirst = lastDate === null;
         let isFirstOfMonth = false;
 
         if (
@@ -64,7 +64,7 @@ export const ExpenseList: React.FC<{
         return (
           <React.Fragment key={e.id}>
             {isFirstOfMonth && (
-              <div className="mt-8 mb-2 flex flex-row items-center justify-start gap-3">
+              <div className="flex flex-row items-center justify-start gap-3 pt-2">
                 <div className="text-xs font-medium text-gray-700 uppercase">
                   {new Intl.DateTimeFormat(i18n.language, {
                     month: 'long',
@@ -76,7 +76,7 @@ export const ExpenseList: React.FC<{
             )}
             <Link
               href={`/${isGroup ? 'groups' : 'balances'}/${contactId}/expenses/${e.id}`}
-              className="flex items-center justify-between py-2"
+              className={cn('flex items-center justify-between', isFirstOfMonth ? 'pb-2' : 'py-2')}
             >
               {isSettlement && <Settlement e={e} userId={userId} />}
               {isCurrencyConversion && <CurrencyConversion e={e} userId={userId} />}
